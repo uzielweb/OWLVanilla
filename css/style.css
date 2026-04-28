@@ -1,0 +1,261 @@
+:root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #e0e7ff;
+    --text-color: #1e293b;
+    --text-muted: #64748b;
+    --bg-light: #f8fafc;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Page Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #1e293b 0%, #4f46e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.05em;
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+/* Owl Theme - Specific Look & Feel */
+.owl-stage-outer {
+    padding: 30px 0; /* Space for shadows */
+}
+
+.owl-item {
+    transition: var(--transition);
+}
+
+.owl-nav {
+    position: absolute;
+    top: 50%;
+    width: calc(100% + 60px);
+    left: -30px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.owl-carousel .owl-nav button {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px !important; /* Increased from 42px and added !important to override resets */
+    font-weight: 200; /* Even thinner for a sleek look */
+    line-height: 1;
+    color: var(--primary-color);
+    transition: var(--transition);
+    cursor: pointer;
+    padding-bottom: 8px !important; /* Centering adjustment */
+}
+
+
+.owl-nav button:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: scale(1.15) translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4);
+    border-color: var(--primary-dark);
+}
+
+.owl-nav button:active {
+    transform: scale(0.95);
+}
+
+.owl-carousel .owl-dots {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 50px;
+    position: relative;
+    z-index: 15;
+    width: 100%;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.owl-carousel .owl-dot {
+    width: 14px;
+    height: 14px;
+    background-color: #cbd5e1 !important;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    transition: var(--transition);
+    position: relative;
+    display: block;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.owl-carousel .owl-dot:hover {
+    background-color: #94a3b8 !important;
+    transform: scale(1.2);
+}
+
+.owl-carousel .owl-dot.active {
+    width: 40px;
+    height: 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+
+.owl-carousel .owl-dot.active::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--primary-light);
+    border-radius: 14px;
+    opacity: 0.5;
+}
+
+
+
+/* Premium Card Styles */
+.magazine-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.magazine-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-img-container {
+    position: relative;
+    width: 100%;
+    padding-top: 140%; /* Book/Magazine aspect ratio */
+    overflow: hidden;
+}
+
+.card-img-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magazine-card:hover .card-img-container img {
+    transform: scale(1.1);
+}
+
+.card-content {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1) 50%);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    letter-spacing: -0.025em;
+}
+
+.card-meta {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    display: block;
+}
+
+.btn-read {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: center;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+}
+
+.btn-read:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+    .owl-nav {
+        display: none;
+    }
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWLVanilla - Biblioteca Virtual Premium</title>
+    <meta name="description" content="Explore nossa biblioteca virtual de revistas e publicações com uma experiência de navegação fluida.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./css/owl.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    <header style="padding: 20px 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;">
+        <div class="container" style="padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-color);">OWL<span style="color: #333;">Vanilla</span></div>
+            <nav>
+                <ul style="list-style: none; display: flex; gap: 30px; font-weight: 600;">
+                    <li><a href="#" style="text-decoration: none; color: #333;">Início</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #333;">Revistas</a></li>
+                    <li><a href="#" style="text-decoration: none; color: #333;">Sobre</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="container" style="text-align: center; padding-top: 80px;">
+            <div class="section-header">
+                <h1 class="section-title">Biblioteca Virtual</h1>
+                <p class="section-subtitle">Acesse as edições mais recentes das nossas publicações exclusivas com a melhor experiência de leitura digital.</p>
+            </div>
+
+            <div class="owl-carousel" id="magazine-slider">
+                <!-- Magazine Item 1 -->
+                <div class="item">
+                    <div class="magazine-card">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=687&auto=format&fit=crop" alt="Revista Edição 01">
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <h3 class="card-title">Tendências 2024</h3>
+                                <p class="card-meta">Edição #42 • Março 2024</p>
+                            </div>
+                            <a href="#" class="btn-read">Ler Agora</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Magazine Item 2 -->
+                <div class="item">
+                    <div class="magazine-card">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=687&auto=format&fit=crop" alt="Revista Edição 02">
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <h3 class="card-title">Arquitetura Moderna</h3>
+                                <p class="card-meta">Edição #41 • Fevereiro 2024</p>
+                            </div>
+                            <a href="#" class="btn-read">Ler Agora</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Magazine Item 3 -->
+                <div class="item">
+                    <div class="magazine-card">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1512446813987-430848ad3990?q=80&w=687&auto=format&fit=crop" alt="Revista Edição 03">
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <h3 class="card-title">Design Minimalista</h3>
+                                <p class="card-meta">Edição #40 • Janeiro 2024</p>
+                            </div>
+                            <a href="#" class="btn-read">Ler Agora</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Magazine Item 4 -->
+                <div class="item">
+                    <div class="magazine-card">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?q=80&w=687&auto=format&fit=crop" alt="Revista Edição 04">
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <h3 class="card-title">Cultura Urbana</h3>
+                                <p class="card-meta">Edição #39 • Dezembro 2023</p>
+                            </div>
+                            <a href="#" class="btn-read">Ler Agora</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Magazine Item 5 -->
+                <div class="item">
+                    <div class="magazine-card">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=687&auto=format&fit=crop" alt="Revista Edição 05">
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <h3 class="card-title">Tecnologia & Vida</h3>
+                                <p class="card-meta">Edição #38 • Novembro 2023</p>
+                            </div>
+                            <a href="#" class="btn-read">Ler Agora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: #222; color: white; padding: 60px 0; margin-top: 80px;">
+        <div class="container" style="text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-color); margin-bottom: 20px;">OWL<span style="color: #fff;">Vanilla</span></div>
+            <p style="opacity: 0.6; font-size: 0.9rem;">© 2024 OWLVanilla. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./js/owlvanilla.js"></script>
+    <script>
+        // Inicialização manual para maior controle
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('magazine-slider');
+            if (container) {
+                new OwlCarousel(container, {
+                    items: 3,
+                    loop: true,
+                    margin: 30,
+                    nav: true,
+                    dots: true,
+                    autoplay: true,
+                    autoplayTimeout: 5000,
+                    responsive: {
+                        0: { items: 1 },
+                        640: { items: 2 },
+                        1024: { items: 3 }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
