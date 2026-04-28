@@ -129,10 +129,13 @@ class OwlCarousel {
     renderStage() {
         this.stage.innerHTML = '';
         if (this.options.loop) {
+            // Add initial clones
             this.clonesBefore.forEach(clone => this.stage.appendChild(clone));
         }
+        // Add real items
         this.items.forEach(item => this.stage.appendChild(item));
         if (this.options.loop) {
+            // Add final clones
             this.clonesAfter.forEach(clone => this.stage.appendChild(clone));
         }
         this.updateStageStyles();
