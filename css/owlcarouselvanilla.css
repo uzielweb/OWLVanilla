@@ -177,29 +177,52 @@
 }
 
 /* Basic Theme - Bare minimum to be usable */
-.owl-nav {
+.owl-nav, .owl-dots {
     display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    gap: 10px;
+    z-index: 10;
 }
+
+/* Nav Positions */
+.owl-nav-top-left      { position: absolute; top: 10px; left: 10px; }
+.owl-nav-top-center    { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); }
+.owl-nav-top-right     { position: absolute; top: 10px; right: 10px; }
+.owl-nav-bottom-left   { position: relative; justify-content: flex-start; margin-top: 15px; }
+.owl-nav-bottom-center { position: relative; justify-content: center; margin-top: 15px; }
+.owl-nav-bottom-right  { position: relative; justify-content: flex-end; margin-top: 15px; }
+.owl-nav-left-vertical { position: absolute; top: 50%; left: 10px; flex-direction: column; transform: translateY(-50%); }
+.owl-nav-right-vertical { position: absolute; top: 50%; right: 10px; flex-direction: column; transform: translateY(-50%); }
+.owl-nav-middle-left-right {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.owl-nav-middle-left-right button { pointer-events: auto; }
 
 .owl-nav button {
     background: #eee;
-    padding: 5px 10px;
-    border-radius: 3px;
+    padding: 5px 12px;
+    border-radius: 4px;
     cursor: pointer;
+    border: 1px solid #ddd;
+    font-weight: bold;
 }
 
-.owl-nav button:hover {
-    background: #ddd;
-}
+.owl-nav button:hover { background: #ddd; }
 
-.owl-dots {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    margin-top: 15px;
-}
+/* Dots Positions */
+.owl-dots-top-left      { position: absolute; top: 10px; left: 10px; }
+.owl-dots-top-center    { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); }
+.owl-dots-top-right     { position: absolute; top: 10px; right: 10px; }
+.owl-dots-bottom-left   { position: relative; justify-content: flex-start; margin-top: 15px; }
+.owl-dots-bottom-center { position: relative; justify-content: center; margin-top: 15px; }
+.owl-dots-bottom-right  { position: relative; justify-content: flex-end; margin-top: 15px; }
+.owl-dots-left-vertical { position: absolute; top: 50%; left: 10px; flex-direction: column; transform: translateY(-50%); }
+.owl-dots-right-vertical { position: absolute; top: 50%; right: 10px; flex-direction: column; transform: translateY(-50%); }
 
 .owl-dot {
     width: 10px;
@@ -208,9 +231,9 @@
     border-radius: 50%;
     border: none;
     padding: 0;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-.owl-dot.active {
-    background: #333;
-}
+.owl-dot.active { background: #333; }
 

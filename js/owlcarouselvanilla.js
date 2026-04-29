@@ -35,6 +35,8 @@ class OwlCarouselVanilla {
             navContainer: false,
             dots: true,
             dotsContainer: false,
+            dotsPosition: 'bottom-center',
+            navPosition: 'middle-left-right',
             autoplay: false,
             autoplayTimeout: 5000,
             autoplayHoverPause: true,
@@ -518,7 +520,7 @@ class OwlCarouselVanilla {
                     document.createElement('div');
         
         if (!this.currentSettings.navContainer) {
-            nav.className = 'owl-nav';
+            nav.className = `owl-nav owl-nav-${this.currentSettings.navPosition}`;
             this.container.appendChild(nav);
         }
 
@@ -543,7 +545,7 @@ class OwlCarouselVanilla {
                      document.createElement('div');
 
         if (!this.currentSettings.dotsContainer) {
-            dots.className = 'owl-dots';
+            dots.className = `owl-dots owl-dots-${this.currentSettings.dotsPosition}`;
             if (this.dotsElement) this.dotsElement.remove();
             this.container.appendChild(dots);
         }

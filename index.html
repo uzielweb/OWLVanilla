@@ -46,6 +46,7 @@
                 <a href="#rtl" class="demo-link" data-demo="rtl">RTL Support</a>
                 <a href="#padding" class="demo-link" data-demo="padding">Stage Padding</a>
                 <a href="#merge" class="demo-link" data-demo="merge">Merge Grid</a>
+                <a href="#positions" class="demo-link" data-demo="positions">UI Positions</a>
                 <a href="#callbacks" class="demo-link" data-demo="callbacks">Callbacks & Events</a>
             </div>
 
@@ -122,6 +123,17 @@
                     <div class="item" data-merge="3"><div class="magazine-card"><div class="card-content"><h3>Triple Width (3)</h3></div></div></div>
                 </div>
                 <p style="margin-top: 20px; opacity: 0.7;">Using <code>merge: true</code> and <code>data-merge</code> attributes to occupy multiple grid slots.</p>
+            </div>
+
+            <!-- Demo: Positions -->
+            <div id="demo-positions" class="demo-section">
+                <h2 style="margin-bottom: 20px;">UI Positions (Nav & Dots)</h2>
+                <div class="owl-carousel" id="slider-positions">
+                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Position Demo 1</h3></div></div></div>
+                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Position Demo 2</h3></div></div></div>
+                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Position Demo 3</h3></div></div></div>
+                </div>
+                <p style="margin-top: 20px; opacity: 0.7;">Example with <code>navPosition: 'top-right'</code> and <code>dotsPosition: 'bottom-left'</code>.</p>
             </div>
 
             <!-- Demo: Callbacks -->
@@ -242,7 +254,18 @@
                 dots: true
             });
 
-            // 8. Callbacks
+            // 8. Positions
+            new OwlCarouselVanilla('#slider-positions', {
+                items: 1,
+                loop: true,
+                margin: 20,
+                nav: true,
+                navPosition: 'top-right',
+                dots: true,
+                dotsPosition: 'bottom-left'
+            });
+
+            // 9. Callbacks
             const logger = document.getElementById('log');
             const addLog = (msg) => {
                 const entry = document.createElement('div');
