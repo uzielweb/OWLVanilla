@@ -128,12 +128,37 @@
             <!-- Demo: Positions -->
             <div id="demo-positions" class="demo-section">
                 <h2 style="margin-bottom: 20px;">UI Positions (Nav & Dots)</h2>
-                <div class="owl-carousel" id="slider-positions">
-                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Position Demo 1</h3></div></div></div>
-                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Position Demo 2</h3></div></div></div>
-                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Position Demo 3</h3></div></div></div>
+                
+                <div style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: #eee; padding: 15px; border-radius: 10px;">
+                    <div style="font-weight: bold; width: 100%; margin-bottom: 5px;">Nav Positions:</div>
+                    <button class="pos-btn active" data-type="nav" data-pos="middle-left-right">Middle</button>
+                    <button class="pos-btn" data-type="nav" data-pos="top-left">Top Left</button>
+                    <button class="pos-btn" data-type="nav" data-pos="top-center">Top Center</button>
+                    <button class="pos-btn" data-type="nav" data-pos="top-right">Top Right</button>
+                    <button class="pos-btn" data-type="nav" data-pos="bottom-left">Bottom Left</button>
+                    <button class="pos-btn" data-type="nav" data-pos="bottom-center">Bottom Center</button>
+                    <button class="pos-btn" data-type="nav" data-pos="bottom-right">Bottom Right</button>
+                    <button class="pos-btn" data-type="nav" data-pos="left-vertical">Left Vertical</button>
+                    <button class="pos-btn" data-type="nav" data-pos="right-vertical">Right Vertical</button>
                 </div>
-                <p style="margin-top: 20px; opacity: 0.7;">Example with <code>navPosition: 'top-right'</code> and <code>dotsPosition: 'bottom-left'</code>.</p>
+
+                <div style="margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: #eee; padding: 15px; border-radius: 10px;">
+                    <div style="font-weight: bold; width: 100%; margin-bottom: 5px;">Dots Positions:</div>
+                    <button class="pos-btn" data-type="dots" data-pos="top-left">Top Left</button>
+                    <button class="pos-btn" data-type="dots" data-pos="top-center">Top Center</button>
+                    <button class="pos-btn" data-type="dots" data-pos="top-right">Top Right</button>
+                    <button class="pos-btn" data-type="dots" data-pos="bottom-left">Bottom Left</button>
+                    <button class="pos-btn active" data-type="dots" data-pos="bottom-center">Bottom Center</button>
+                    <button class="pos-btn" data-type="dots" data-pos="bottom-right">Bottom Right</button>
+                    <button class="pos-btn" data-type="dots" data-pos="left-vertical">Left Vertical</button>
+                    <button class="pos-btn" data-type="dots" data-pos="right-vertical">Right Vertical</button>
+                </div>
+
+                <div class="owl-carousel" id="slider-positions">
+                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Slide 1</h3></div></div></div>
+                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Slide 2</h3></div></div></div>
+                    <div class="item"><div class="magazine-card"><div class="card-content"><h3>Slide 3</h3></div></div></div>
+                </div>
             </div>
 
             <!-- Demo: Callbacks -->
@@ -255,14 +280,31 @@
             });
 
             // 8. Positions
-            new OwlCarouselVanilla('#slider-positions', {
+            const posSlider = new OwlCarouselVanilla('#slider-positions', {
                 items: 1,
                 loop: true,
                 margin: 20,
                 nav: true,
-                navPosition: 'top-right',
+                navPosition: 'middle-left-right',
                 dots: true,
-                dotsPosition: 'bottom-left'
+                dotsPosition: 'bottom-center'
+            });
+
+            // Position Switcher Logic
+            document.querySelectorAll('.pos-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const type = btn.getAttribute('data-type');
+                    const pos = btn.getAttribute('data-pos');
+                    
+                    // Update classes on buttons
+                    document.querySelectorAll(`.pos-btn[data-type="${type}"]`).forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Update Slider
+                    posSlider.currentSettings[type === 'nav' ? 'navPosition' : 'dotsPosition'] = pos;
+                    if (type === 'nav') posSlider.updateNavigation();
+                    else posSlider.updateDotsVisibility();
+                });
             });
 
             // 9. Callbacks
