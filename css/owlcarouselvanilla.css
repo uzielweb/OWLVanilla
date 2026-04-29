@@ -204,15 +204,34 @@
 .owl-nav-middle-left-right button { pointer-events: auto; }
 
 .owl-nav button {
-    background: #eee;
-    padding: 5px 12px;
-    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    padding: 10px 18px;
+    border-radius: 8px;
     cursor: pointer;
     border: 1px solid #ddd;
-    font-weight: bold;
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
 }
 
-.owl-nav button:hover { background: #ddd; }
+.owl-nav button:hover {
+    background: #f8f8f8;
+    border-color: #bbb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.owl-nav button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
 
 /* Dots Positions */
 .owl-dots-top-left      { position: absolute; top: 10px; left: 10px; }
@@ -225,15 +244,23 @@
 .owl-dots-right-vertical { position: absolute; top: 50%; right: 10px; flex-direction: column; transform: translateY(-50%); }
 
 .owl-dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background: #ccc;
     border-radius: 50%;
     border: none;
     padding: 0;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.owl-dot.active { background: #333; }
+.owl-dot:hover {
+    background: #999;
+    transform: scale(1.2);
+}
+
+.owl-dot.active { 
+    background: #333;
+    transform: scale(1.2);
+}
 
