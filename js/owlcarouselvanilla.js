@@ -219,16 +219,18 @@ class OwlCarouselVanilla {
     }
 
     updateStageStyles() {
-        const containerWidth = this.container.offsetWidth;
+        // Use stageOuter for the most accurate visible width measurement
+        const containerWidth = this.stageOuter.clientWidth;
         const margin = this.currentSettings.margin || 0;
-        const items = this.visibleItems;
+        const items = this.visibleItems || 1;
         
+        // Calculate item width so that 'items' amount fit perfectly with margins between them
         const itemWidth = (containerWidth - (margin * (items - 1))) / items;
         
         let totalWidth = 0;
         const children = Array.from(this.stage.children);
         
-        children.forEach((child, i) => {
+        children.forEach((child) => {
             if (this.currentSettings.autoWidth) {
                 child.style.width = 'auto';
             } else {
@@ -238,9 +240,11 @@ class OwlCarouselVanilla {
             child.style.marginRight = this.currentSettings.rtl ? '0' : `${margin}px`;
             child.style.marginLeft = this.currentSettings.rtl ? `${margin}px` : '0';
             
-            totalWidth += child.offsetWidth + margin;
+            // Use the calculated width + margin for the total stage width
+            totalWidth += (this.currentSettings.autoWidth ? child.offsetWidth : itemWidth) + margin;
         });
 
+        // Set stage width to accommodate all items and their margins
         this.stage.style.width = `${totalWidth}px`;
         
         if (this.currentSettings.rtl) {
@@ -248,6 +252,7 @@ class OwlCarouselVanilla {
             this.stage.style.direction = 'rtl';
         } else {
             this.stage.style.marginLeft = '0';
+            this.stage.style.direction = 'ltr';
         }
     }
 
@@ -259,7 +264,11 @@ class OwlCarouselVanilla {
         const children = Array.from(this.stage.children);
         const offset = this.currentSettings.loop ? this.clonesCount : 0;
         const targetItem = children[offset + this.currentIndex];
+        
+        const containerWidth = this.stageOuter.clientWidth;
+        const items = this.visibleItems || 1;
         const margin = this.currentSettings.margin || 0;
+        const itemWidth = (containerWidth - (margin * (items - 1))) / items;
         
         let translate = 0;
         if (this.currentSettings.autoWidth) {
@@ -267,14 +276,12 @@ class OwlCarouselVanilla {
                 translate += children[i].offsetWidth + margin;
             }
         } else {
-            const itemWidth = children[0].offsetWidth + margin;
-            translate = (offset + this.currentIndex) * itemWidth;
+            translate = (offset + this.currentIndex) * (itemWidth + margin);
         }
 
         if (this.currentSettings.center) {
-            const containerWidth = this.container.offsetWidth;
-            const itemWidth = targetItem.offsetWidth;
-            translate -= (containerWidth - itemWidth) / 2;
+            const currentItemWidth = this.currentSettings.autoWidth ? targetItem.offsetWidth : itemWidth;
+            translate -= (containerWidth - currentItemWidth) / 2;
         }
 
         // RTL adjustment
