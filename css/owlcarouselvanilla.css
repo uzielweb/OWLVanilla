@@ -246,21 +246,22 @@
 .owl-dot {
     width: 12px;
     height: 12px;
-    background: #ccc;
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 50%;
-    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .owl-dot:hover {
-    background: #999;
+    background: rgba(0, 0, 0, 0.4);
     transform: scale(1.2);
 }
 
 .owl-dot.active { 
-    background: #333;
+    background: #4f46e5; /* Primary color */
+    border-color: #4f46e5;
     transform: scale(1.2);
 }
 
