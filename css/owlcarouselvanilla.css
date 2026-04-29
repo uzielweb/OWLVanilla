@@ -198,7 +198,7 @@
 .owl-nav-left-vertical { 
     position: absolute; 
     top: 50%; 
-    left: -60px; 
+    left: 10px; 
     flex-direction: column; 
     transform: translateY(-50%); 
 }
@@ -206,7 +206,7 @@
 .owl-nav-right-vertical { 
     position: absolute; 
     top: 50%; 
-    right: -60px; 
+    right: 10px; 
     flex-direction: column; 
     transform: translateY(-50%); 
 }
@@ -223,8 +223,10 @@
 .owl-nav-middle-left-right button { pointer-events: auto; }
 
 /* Adjust stage outer when vertical navs are used to avoid overlap */
-.owl-carousel:has(.owl-nav-left-vertical) .owl-stage-outer { margin-left: 60px; }
-.owl-carousel:has(.owl-nav-right-vertical) .owl-stage-outer { margin-right: 60px; }
+.owl-carousel:has(.owl-nav-left-vertical) { padding-left: 60px; }
+.owl-carousel:has(.owl-nav-right-vertical) { padding-right: 60px; }
+.owl-carousel:has(.owl-dots-left-vertical) { padding-left: 30px; }
+.owl-carousel:has(.owl-dots-right-vertical) { padding-right: 30px; }
 
 .owl-nav button {
     background: #fff;
@@ -265,7 +267,7 @@
 .owl-dots-left-vertical { 
     position: absolute; 
     top: 50%; 
-    left: -30px; 
+    left: 10px; 
     flex-direction: column; 
     transform: translateY(-50%); 
 }
@@ -273,7 +275,7 @@
 .owl-dots-right-vertical { 
     position: absolute; 
     top: 50%; 
-    right: -30px; 
+    right: 10px; 
     flex-direction: column; 
     transform: translateY(-50%); 
 }
