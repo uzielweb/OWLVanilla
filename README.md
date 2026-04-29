@@ -1,8 +1,8 @@
-# OWLVanilla 🦉
+# OWLCarouselVanilla 🦉
 
-**OWLVanilla** is a modern, lightweight, high-fidelity Vanilla JavaScript carousel implementation inspired by Owl Carousel, but without jQuery dependencies. Designed to provide a premium experience with refined design and optimized performance.
+**OWLCarouselVanilla** is a modern, lightweight, high-fidelity Vanilla JavaScript carousel implementation inspired by Owl Carousel, but without jQuery dependencies. Designed to provide a premium experience with refined design and optimized performance.
 
-![OWLVanilla Demo](https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1200&auto=format&fit=crop)
+![OWLCarouselVanilla Demo](https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1200&auto=format&fit=crop)
 
 ## ✨ Features
 
@@ -23,11 +23,11 @@ Copy the `css/` and `js/` folders to your project and reference the files in you
 
 ```html
 <!-- Structural and Design Styles -->
-<link rel="stylesheet" href="css/owl.css">
+<link rel="stylesheet" href="css/owlcarouselvanilla.css">
 <link rel="stylesheet" href="css/style.css">
 
 <!-- Scripts -->
-<script src="js/owlvanilla.js"></script>
+<script src="js/owlcarouselvanilla.js"></script>
 ```
 
 ### 2. HTML Structure
@@ -50,7 +50,7 @@ Initialize the carousel via JavaScript:
 
 ```javascript
 document.addEventListener('DOMContentLoaded', () => {
-    const slider = new OwlCarousel('#my-slider', {
+    const slider = new OwlCarouselVanilla('#my-slider', {
         items: 3,           // Visible items on desktop
         loop: true,          // Infinite loop
         margin: 30,          // Spacing between items
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 You can control the carousel programmatically:
 
 ```javascript
-const carousel = new OwlCarousel('#my-slider');
+const carousel = new OwlCarouselVanilla('#my-slider');
 
 carousel.next();          // Go to next slide
 carousel.prev();          // Go to previous slide

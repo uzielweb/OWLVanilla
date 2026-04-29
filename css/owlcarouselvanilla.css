@@ -129,6 +129,34 @@
     float: right;
 }
 
+/* Animations */
+.owl-carousel .owl-item.animated {
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+}
+
+.owl-carousel .owl-fade-in {
+    animation-name: owlFadeIn;
+}
+
+.owl-carousel .owl-fade-out {
+    animation-name: owlFadeOut;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@keyframes owlFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes owlFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
 /* No Js */
 .no-js .owl-carousel {
     display: block;
