@@ -127,24 +127,26 @@ class OwlCarouselVanilla {
 
     applyResponsive() {
         const w = window.innerWidth;
-        let items = this.options.items;
-
-        Object.keys(this.options.responsive)
-            .sort((a, b) => a - b)
-            .forEach(bp => {
+        let settings = { ...this.options };
+        
+        if (this.options.responsive) {
+            // Sort breakpoints numerically to ensure correct override order
+            const breakpoints = Object.keys(this.options.responsive).sort((a, b) => Number(a) - Number(b));
+            
+            breakpoints.forEach(bp => {
                 if (w >= Number(bp)) {
-                    const settings = this.options.responsive[bp];
-                    items = settings.items !== undefined ? settings.items : items;
-                    // Merge other responsive settings if needed
+                    settings = { ...settings, ...this.options.responsive[bp] };
                 }
             });
+        }
 
-        this.visibleItems = items;
+        this.currentSettings = settings;
+        this.visibleItems = settings.items;
     }
 
     cloneForLoop() {
         this.clonesCount = 0;
-        if (!this.options.loop || this.items.length <= 1) return;
+        if (!this.currentSettings.loop || this.items.length <= 1) return;
 
         const cloneCount = Math.max(this.visibleItems, 3);
         this.clonesCount = cloneCount;
@@ -166,11 +168,11 @@ class OwlCarouselVanilla {
 
     renderStage() {
         this.stage.innerHTML = '';
-        if (this.options.loop) {
+        if (this.currentSettings.loop) {
             this.clonesBefore.forEach(clone => this.stage.appendChild(clone));
         }
         this.items.forEach(item => this.stage.appendChild(item));
-        if (this.options.loop) {
+        if (this.currentSettings.loop) {
             this.clonesAfter.forEach(clone => this.stage.appendChild(clone));
         }
         this.updateStageStyles();
@@ -203,29 +205,49 @@ class OwlCarouselVanilla {
     }
 
     handleResize() {
+        const oldItems = this.visibleItems;
         this.applyResponsive();
-        this.updateStageStyles();
+        
+        if (oldItems !== this.visibleItems) {
+            this.cloneForLoop();
+            this.renderStage();
+        } else {
+            this.updateStageStyles();
+        }
+        
         this.goTo(this.currentIndex, false);
     }
 
     updateStageStyles() {
-        let totalWidth = 0;
-        const itemWidth = (this.container.offsetWidth - this.options.margin * (this.visibleItems - 1)) / this.visibleItems;
+        const containerWidth = this.container.offsetWidth;
+        const margin = this.currentSettings.margin || 0;
+        const items = this.visibleItems;
         
-        Array.from(this.stage.children).forEach(child => {
-            if (this.options.autoWidth) {
+        const itemWidth = (containerWidth - (margin * (items - 1))) / items;
+        
+        let totalWidth = 0;
+        const children = Array.from(this.stage.children);
+        
+        children.forEach((child, i) => {
+            if (this.currentSettings.autoWidth) {
                 child.style.width = 'auto';
             } else {
                 child.style.width = `${itemWidth}px`;
             }
-            child.style.marginRight = this.options.rtl ? '0' : `${this.options.margin}px`;
-            child.style.marginLeft = this.options.rtl ? `${this.options.margin}px` : '0';
-            totalWidth += child.offsetWidth + this.options.margin;
+            
+            child.style.marginRight = this.currentSettings.rtl ? '0' : `${margin}px`;
+            child.style.marginLeft = this.currentSettings.rtl ? `${margin}px` : '0';
+            
+            totalWidth += child.offsetWidth + margin;
         });
 
         this.stage.style.width = `${totalWidth}px`;
-        if (this.options.rtl) {
+        
+        if (this.currentSettings.rtl) {
+            this.stage.style.marginRight = `-${margin}px`;
             this.stage.style.direction = 'rtl';
+        } else {
+            this.stage.style.marginLeft = '0';
         }
     }
 
@@ -235,40 +257,41 @@ class OwlCarouselVanilla {
         this.currentIndex = this.normalize(index);
         
         const children = Array.from(this.stage.children);
-        const offset = this.options.loop ? this.clonesCount : 0;
+        const offset = this.currentSettings.loop ? this.clonesCount : 0;
         const targetItem = children[offset + this.currentIndex];
+        const margin = this.currentSettings.margin || 0;
         
         let translate = 0;
-        if (this.options.autoWidth) {
+        if (this.currentSettings.autoWidth) {
             for (let i = 0; i < offset + this.currentIndex; i++) {
-                translate += children[i].offsetWidth + this.options.margin;
+                translate += children[i].offsetWidth + margin;
             }
         } else {
-            const itemWidth = children[0].offsetWidth + this.options.margin;
+            const itemWidth = children[0].offsetWidth + margin;
             translate = (offset + this.currentIndex) * itemWidth;
         }
 
-        if (this.options.center) {
+        if (this.currentSettings.center) {
             const containerWidth = this.container.offsetWidth;
             const itemWidth = targetItem.offsetWidth;
             translate -= (containerWidth - itemWidth) / 2;
         }
 
         // RTL adjustment
-        const multiplier = this.options.rtl ? 1 : -1;
+        const multiplier = this.currentSettings.rtl ? 1 : -1;
         const finalTranslate = translate * multiplier;
 
         // AnimateIn / AnimateOut
-        if (animate && (this.options.animateIn || this.options.animateOut)) {
+        if (animate && (this.currentSettings.animateIn || this.currentSettings.animateOut)) {
             this.applyAnimation(oldIndex, this.currentIndex);
         } else {
-            this.stage.style.transition = animate ? `transform ${this.options.smartSpeed}ms ease-out` : 'none';
+            this.stage.style.transition = animate ? `transform ${this.currentSettings.smartSpeed}ms ease-out` : 'none';
             this.stage.style.transform = `translate3d(${finalTranslate}px, 0, 0)`;
         }
 
         this.currentTranslate = finalTranslate;
 
-        if (this.options.autoHeight) {
+        if (this.currentSettings.autoHeight) {
             this.updateAutoHeight();
         }
 
@@ -280,33 +303,33 @@ class OwlCarouselVanilla {
             if (oldIndex !== this.currentIndex) {
                 this.trigger('onChanged', { index: this.currentIndex });
             }
-        }, animate ? this.options.smartSpeed : 0);
+        }, animate ? this.currentSettings.smartSpeed : 0);
     }
 
     applyAnimation(oldIndex, newIndex) {
         const children = Array.from(this.stage.children);
-        const offset = this.options.loop ? this.clonesCount : 0;
+        const offset = this.currentSettings.loop ? this.clonesCount : 0;
         const prevItem = children[offset + oldIndex];
         const nextItem = children[offset + newIndex];
+        const margin = this.currentSettings.margin || 0;
 
-        if (this.options.animateOut) {
-            prevItem.classList.add('animated', this.options.animateOut);
+        if (this.currentSettings.animateOut) {
+            prevItem.classList.add('animated', this.currentSettings.animateOut);
         }
-        if (this.options.animateIn) {
-            nextItem.classList.add('animated', this.options.animateIn);
+        if (this.currentSettings.animateIn) {
+            nextItem.classList.add('animated', this.currentSettings.animateIn);
         }
 
-        // Normal transform still happens but maybe hidden by CSS
-        const itemWidth = children[0].offsetWidth + this.options.margin;
-        const translate = (offset + this.currentIndex) * itemWidth * (this.options.rtl ? 1 : -1);
+        const itemWidth = children[0].offsetWidth + margin;
+        const translate = (offset + this.currentIndex) * itemWidth * (this.currentSettings.rtl ? 1 : -1);
         
-        this.stage.style.transition = `transform ${this.options.smartSpeed}ms ease-out`;
+        this.stage.style.transition = `transform ${this.currentSettings.smartSpeed}ms ease-out`;
         this.stage.style.transform = `translate3d(${translate}px, 0, 0)`;
 
         setTimeout(() => {
-            if (this.options.animateOut) prevItem.classList.remove('animated', this.options.animateOut);
-            if (this.options.animateIn) nextItem.classList.remove('animated', this.options.animateIn);
-        }, this.options.smartSpeed);
+            if (this.currentSettings.animateOut) prevItem.classList.remove('animated', this.currentSettings.animateOut);
+            if (this.currentSettings.animateIn) nextItem.classList.remove('animated', this.currentSettings.animateIn);
+        }, this.currentSettings.smartSpeed);
     }
 
     updateAutoHeight() {
@@ -314,7 +337,7 @@ class OwlCarouselVanilla {
         const activeItem = this.stage.children[offset + this.currentIndex];
         if (activeItem) {
             this.stageOuter.style.height = `${activeItem.offsetHeight}px`;
-            this.stageOuter.style.transition = `height ${this.options.smartSpeed}ms ease-in-out`;
+            this.stageOuter.style.transition = `height ${this.currentSettings.smartSpeed}ms ease-in-out`;
         }
     }
 
@@ -325,11 +348,11 @@ class OwlCarouselVanilla {
 
     next() { 
         this.trigger('onChange');
-        this.goTo(this.currentIndex + this.options.slideBy); 
+        this.goTo(this.currentIndex + (this.currentSettings.slideBy || 1)); 
     }
     prev() { 
         this.trigger('onChange');
-        this.goTo(this.currentIndex - this.options.slideBy); 
+        this.goTo(this.currentIndex - (this.currentSettings.slideBy || 1)); 
     }
 
     updateActiveClasses() {
@@ -339,11 +362,14 @@ class OwlCarouselVanilla {
             const realIndex = i - offset;
             const isActive = realIndex === this.currentIndex;
             child.classList.toggle('active', isActive);
-            if (this.options.center) child.classList.toggle('center', isActive);
+            if (this.currentSettings.center) child.classList.toggle('center', isActive);
         });
     }
 
     dragStart(e) {
+        if (!this.currentSettings.mouseDrag && e.type.includes('mouse')) return;
+        if (!this.currentSettings.touchDrag && e.type.includes('touch')) return;
+
         this.isDragging = true;
         this.startX = this.getX(e);
         this.prevTranslate = this.currentTranslate;
@@ -378,7 +404,7 @@ class OwlCarouselVanilla {
 
         const moved = this.currentTranslate - this.prevTranslate;
         if (Math.abs(moved) > 80) {
-            if (this.options.rtl) {
+            if (this.currentSettings.rtl) {
                 if (moved < 0) this.prev(); else this.next();
             } else {
                 if (moved > 0) this.prev(); else this.next();
@@ -399,12 +425,12 @@ class OwlCarouselVanilla {
 
         const prevBtn = document.createElement('button');
         prevBtn.className = 'owl-prev';
-        prevBtn.innerHTML = this.options.navText[0];
+        prevBtn.innerHTML = this.currentSettings.navText[0];
         prevBtn.addEventListener('click', () => this.prev());
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'owl-next';
-        nextBtn.innerHTML = this.options.navText[1];
+        nextBtn.innerHTML = this.currentSettings.navText[1];
         nextBtn.addEventListener('click', () => this.next());
 
         nav.append(prevBtn, nextBtn);
@@ -416,11 +442,11 @@ class OwlCarouselVanilla {
         this.dotsContainer = document.createElement('div');
         this.dotsContainer.className = 'owl-dots';
 
-        const dotCount = Math.ceil(this.items.length / (this.options.autoWidth ? 1 : this.visibleItems));
+        const dotCount = Math.ceil(this.items.length / (this.currentSettings.autoWidth ? 1 : this.visibleItems));
         for (let i = 0; i < dotCount; i++) {
             const dot = document.createElement('button');
             dot.className = `owl-dot ${i === 0 ? 'active' : ''}`;
-            dot.addEventListener('click', () => this.goTo(i * (this.options.autoWidth ? 1 : this.visibleItems)));
+            dot.addEventListener('click', () => this.goTo(i * (this.currentSettings.autoWidth ? 1 : this.visibleItems)));
             this.dotsContainer.appendChild(dot);
         }
         this.container.appendChild(this.dotsContainer);
@@ -429,13 +455,13 @@ class OwlCarouselVanilla {
     updateDots() {
         if (!this.dotsContainer) return;
         const dots = this.dotsContainer.querySelectorAll('.owl-dot');
-        const activeDot = Math.floor(this.currentIndex / (this.options.autoWidth ? 1 : this.visibleItems));
+        const activeDot = Math.floor(this.currentIndex / (this.currentSettings.autoWidth ? 1 : this.visibleItems));
         dots.forEach((dot, i) => dot.classList.toggle('active', i === activeDot));
     }
 
     startAutoplay() {
-        if (this.autoplayTimer || !this.options.autoplay) return;
-        this.autoplayTimer = setInterval(() => this.next(), this.options.autoplayTimeout);
+        if (this.autoplayTimer || !this.currentSettings.autoplay) return;
+        this.autoplayTimer = setInterval(() => this.next(), this.currentSettings.autoplayTimeout);
     }
 
     pauseAutoplay() {
