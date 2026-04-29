@@ -282,7 +282,22 @@ class OwlCarouselVanilla {
             this.updateStageStyles();
         }
         
+        // Fix middle positioning based on stageOuter height
+        this.fixMiddlePositioning();
+        
         this.goTo(this.currentIndex, false);
+    }
+
+    fixMiddlePositioning() {
+        const stageMid = this.stageOuter.offsetTop + (this.stageOuter.offsetHeight / 2);
+        
+        if (this.navElement && (this.currentSettings.navPosition.includes('middle') || this.currentSettings.navPosition.includes('vertical'))) {
+            this.navElement.style.top = `${stageMid}px`;
+        }
+        
+        if (this.dotsElement && (this.currentSettings.dotsPosition.includes('middle') || this.currentSettings.dotsPosition.includes('vertical'))) {
+            this.dotsElement.style.top = `${stageMid}px`;
+        }
     }
 
     updateStageStyles() {
