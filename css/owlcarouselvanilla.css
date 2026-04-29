@@ -243,10 +243,10 @@
 .owl-dots-left-vertical { position: absolute; top: 50%; left: 10px; flex-direction: column; transform: translateY(-50%); }
 .owl-dots-right-vertical { position: absolute; top: 50%; right: 10px; flex-direction: column; transform: translateY(-50%); }
 
-.owl-dot {
+.owl-carousel .owl-dot {
     width: 12px;
     height: 12px;
-    background: #ccc;
+    background: #ccc !important; /* Force override of 'none' reset */
     border-radius: 50%;
     border: none;
     padding: 0;
@@ -254,15 +254,15 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.owl-dot:hover {
-    background: #999;
+.owl-carousel .owl-dot:hover {
+    background: #999 !important;
     transform: scale(1.2);
 }
 
-.owl-dot.active { 
+.owl-carousel .owl-dot.active { 
     width: 30px;
     border-radius: 6px;
-    background: #000;
+    background: #000 !important;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
